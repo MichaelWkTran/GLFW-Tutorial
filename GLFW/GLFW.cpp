@@ -63,30 +63,43 @@ int main()
     glDeleteShader(GLuVertexShader);
     glDeleteShader(GLuFragmentShader);
 
-    //Set up verticies
+    //Set up verticies and indicies
     GLfloat GLfVertices[] =
     {
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f
+        -0.5f,  -0.5f * sqrtf(3.0f) / 3.0f,    0.0f, // Lower left corner
+        0.5f,   -0.5f * sqrtf(3.0f) / 3.0f,    0.0f, // Lower right corner
+        0.0f,   0.5f * sqrtf(3.0f) * 2.0f / 3.0f, 0.0f, // Upper corner
+        -0.25f, 0.5f * sqrtf(3.0f) / 6.0f,     0.0f, // Inner Upper left corner
+        0.25f,  0.5f * sqrtf(3.0f) / 6.0f,     0.0f, // Inner Upper right corner
+        0.0f,   -0.5f * sqrtf(3.0f) / 3,       0.0f  // Inner Lower corner
+    };
+
+    GLuint GLuIndicies[]
+    {
+        0, 3, 5, //Lower left triangle
+        3, 2, 4, //Lower right triangle
+        5, 4, 1  //Upper triangle
     };
 
     //Set up Vertex Buffer
-    GLuint GLuVertexArray, GLuVertexBuffer;
+    GLuint GLuVertexArray, GLuVertexBuffer, GLuElementBuffer;
 
     glGenVertexArrays(1, &GLuVertexArray);
     glGenBuffers(1, &GLuVertexBuffer);
-    
+    glGenBuffers(1, &GLuElementBuffer);
+
     glBindVertexArray(GLuVertexArray);
     glBindBuffer(GL_ARRAY_BUFFER, GLuVertexBuffer);
-
-    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfVertices), GLfVertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(GLfVertices), GLfVertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GLuElementBuffer);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuIndicies), GLuIndicies, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
     //Render Loop
     while (!glfwWindowShouldClose(pWindow))
@@ -103,7 +116,8 @@ int main()
         glUseProgram(GLuShaderProgram);
         glBindVertexArray(GLuVertexArray);
         
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        //glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
 
         //Check and call events and swap the buffers
         glfwSwapBuffers(pWindow);
@@ -112,6 +126,7 @@ int main()
 
     glDeleteVertexArrays(1, &GLuVertexArray);
     glDeleteBuffers(1, &GLuVertexBuffer);
+    glDeleteBuffers(1, &GLuElementBuffer);
     glDeleteProgram(GLuShaderProgram);
     glfwDestroyWindow(pWindow);
     glfwTerminate();
