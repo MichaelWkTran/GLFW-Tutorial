@@ -28,10 +28,12 @@ CShader::CShader(const char* _pVertexFile, const char* _pFragmentFile)
 	GLuint GLuVertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(GLuVertexShader, 1, &pVertexSource, NULL);
 	glCompileShader(GLuVertexShader);
+	CompileErrors(GLuVertexShader, "VERTEX");
 
 	GLuint GLuFragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(GLuFragmentShader, 1, &pFragmentSource, NULL);
 	glCompileShader(GLuFragmentShader);
+	CompileErrors(GLuFragmentShader, "FRAGMENT");
 
 	m_GLuID = glCreateProgram();
 
@@ -39,6 +41,7 @@ CShader::CShader(const char* _pVertexFile, const char* _pFragmentFile)
 	glAttachShader(m_GLuID, GLuFragmentShader);
 
 	glLinkProgram(m_GLuID);
+	CompileErrors(m_GLuID, "PROGRAM");
 
 	glDeleteShader(GLuVertexShader);
 	glDeleteShader(GLuFragmentShader);
@@ -52,4 +55,29 @@ void CShader::Activate()
 void CShader::Delete()
 {
 	glDeleteProgram(m_GLuID);
+}
+
+void CShader::CompileErrors(unsigned int _uShader, const char* _pType)
+{
+	GLint hasCompiled;
+	char cInfoLog[1024];
+
+	if (_pType != "PROGRAM")
+	{
+		glGetShaderiv(_uShader, GL_COMPILE_STATUS, &hasCompiled);
+		if (hasCompiled == GL_FALSE)
+		{
+			glGetShaderInfoLog(_uShader, 1024, NULL, cInfoLog);
+			std::cout << "SHADER_COMPILATION_ERROR for:" << _pType << "\n" << cInfoLog << std::endl;
+		}
+	}
+	else
+	{
+		glGetProgramiv(_uShader, GL_LINK_STATUS, &hasCompiled);
+		if (hasCompiled == GL_FALSE)
+		{
+			glGetProgramInfoLog(_uShader, 1024, NULL, cInfoLog);
+			std::cout << "SHADER_LINKING_ERROR for:" << _pType << "\n" << cInfoLog << std::endl;
+		}
+	}
 }

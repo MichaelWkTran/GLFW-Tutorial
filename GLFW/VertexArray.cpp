@@ -5,11 +5,19 @@ CVertexArray::CVertexArray()
     glGenVertexArrays(1, &m_GLuID);
 }
 
-void CVertexArray::LinkVertexBuffer(CVertexBuffer VertexBuffer, GLuint GluLayout)
+void CVertexArray::LinkAttribute
+(
+    CVertexBuffer VertexBuffer,
+    GLuint GluLayout,
+    GLuint _GLuNumComponents,
+    GLenum _GLeType,
+    GLsizeiptr _Stride,
+    void* _Offset
+)
 {
     VertexBuffer.Bind();
 
-    glVertexAttribPointer(GluLayout, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glVertexAttribPointer(GluLayout, _GLuNumComponents, _GLeType, GL_FALSE, _Stride, _Offset);
     glEnableVertexAttribArray(GluLayout);
 
     VertexBuffer.Unbind();

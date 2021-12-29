@@ -9,15 +9,15 @@
 
 void FramebufferSizeCallback(GLFWwindow* _pWindow, int _iWidth, int _iHeight);
 
-//Set up verticies and indicies
 GLfloat GLfVertices[] =
 {
-    -0.5f,  -0.5f * sqrtf(3.0f) / 3.0f,    0.0f, // Lower left corner
-    0.5f,   -0.5f * sqrtf(3.0f) / 3.0f,    0.0f, // Lower right corner
-    0.0f,   0.5f * sqrtf(3.0f) * 2.0f / 3.0f, 0.0f, // Upper corner
-    -0.25f, 0.5f * sqrtf(3.0f) / 6.0f,     0.0f, // Inner Upper left corner
-    0.25f,  0.5f * sqrtf(3.0f) / 6.0f,     0.0f, // Inner Upper right corner
-    0.0f,   -0.5f * sqrtf(3.0f) / 3,       0.0f  // Inner Lower corner
+    //Coordinates                                      /**/    //Colours             /**/    
+    -0.5f,  -0.5f * sqrtf(3.0f) / 3.0f,       0.0f,    /**/    0.8f, 0.3f,  0.02f,    /**/    // Lower left corner       
+    0.5f,   -0.5f * sqrtf(3.0f) / 3.0f,       0.0f,    /**/    0.8f, 0.3f,  0.02f,    /**/    // Lower right corner      
+    0.0f,   0.5f * sqrtf(3.0f) * 2.0f / 3.0f, 0.0f,    /**/    1.0f, 0.6f,  0.32f,    /**/    // Upper corner            
+    -0.25f, 0.5f * sqrtf(3.0f) / 6.0f,        0.0f,    /**/    0.9f, 0.45f, 0.17f,    /**/    // Inner Upper left corner 
+    0.25f,  0.5f * sqrtf(3.0f) / 6.0f,        0.0f,    /**/    0.9f, 0.45f, 0.17f,    /**/    // Inner Upper right corner
+    0.0f,   -0.5f * sqrtf(3.0f) / 3,          0.0f,    /**/    0.8f, 0.3f,  0.02f     /**/    // Inner Lower corner      
 };
 
 GLuint GLuIndicies[]
@@ -63,11 +63,14 @@ int main()
     CVertexBuffer VBO1(GLfVertices, sizeof(GLfVertices));
     CElementBuffer EBO1(GLuIndicies, sizeof(GLuIndicies));
 
-    VAO1.LinkVertexBuffer(VBO1, 0);
+    VAO1.LinkAttribute(VBO1, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);
+    VAO1.LinkAttribute(VBO1, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     VAO1.Unbind();
     VBO1.Unbind();
     EBO1.Unbind();
     
+    GLuint uniID = glGetUniformLocation(ShaderProgram.m_GLuID, "scale");
+
     //Render Loop
     while (!glfwWindowShouldClose(pWindow))
     {
@@ -81,6 +84,7 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         ShaderProgram.Activate();
+        glUniform1f(uniID, 1.5f);
         VAO1.Bind();
         
         glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
