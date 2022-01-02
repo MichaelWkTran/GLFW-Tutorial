@@ -1,4 +1,9 @@
-﻿  GLFW.cpp
+﻿  ElementBuffer.cpp
   Shader.cpp
+  GLFW.cpp
+  VertexArray.cpp
+C:\Users\User\Documents\GitHub\GLFW-Tutorial\GLFW\VertexArray.cpp(20,77): warning C4244: 'argument': conversion from 'GLsizeiptr' to 'GLsizei', possible loss of data
+  VertexBuffer.cpp
   Generating Code...
-  GLFW.vcxproj -> D:\Michael\Other stuff\C++\TestOpenGL1\x64\Debug\GLFW.exe
+  glad.c
+LINK : fatal error LNK1104: cannot open file 'glfw3.lib'
