@@ -3,6 +3,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stb/stb_image.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "Shader.h"
 #include "VertexArray.h"
@@ -45,7 +48,7 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(pWindow);
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) //???
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
