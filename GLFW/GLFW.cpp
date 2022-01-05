@@ -1,30 +1,30 @@
 #include <iostream>
+#include <string>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <stb/stb_image.h>
 
 #include "Shader.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "ElementBuffer.h"
+#include "Texture.h"
 
 void FramebufferSizeCallback(GLFWwindow* _pWindow, int _iWidth, int _iHeight);
 
 GLfloat GLfVertices[] =
 {
-    //Coordinates                                      /**/    //Colours             /**/    
-    -0.5f,  -0.5f * sqrtf(3.0f) / 3.0f,       0.0f,    /**/    0.8f, 0.3f,  0.02f,    /**/    // Lower left corner       
-    0.5f,   -0.5f * sqrtf(3.0f) / 3.0f,       0.0f,    /**/    0.8f, 0.3f,  0.02f,    /**/    // Lower right corner      
-    0.0f,   0.5f * sqrtf(3.0f) * 2.0f / 3.0f, 0.0f,    /**/    1.0f, 0.6f,  0.32f,    /**/    // Upper corner            
-    -0.25f, 0.5f * sqrtf(3.0f) / 6.0f,        0.0f,    /**/    0.9f, 0.45f, 0.17f,    /**/    // Inner Upper left corner 
-    0.25f,  0.5f * sqrtf(3.0f) / 6.0f,        0.0f,    /**/    0.9f, 0.45f, 0.17f,    /**/    // Inner Upper right corner
-    0.0f,   -0.5f * sqrtf(3.0f) / 3,          0.0f,    /**/    0.8f, 0.3f,  0.02f     /**/    // Inner Lower corner      
+    //Coordinates          /**/    //Colours            /**/    Texture Coordinate
+    -0.5f, -0.5f, 0.0f,    /**/    1.0f, 0.0f, 0.0f,    /**/    0.0f, 0.0f, // Lower left corner
+    -0.5f,  0.5f, 0.0f,    /**/    0.0f, 1.0f, 0.0f,    /**/    0.0f, 1.0f, // Upper left corner
+     0.5f,  0.5f, 0.0f,    /**/    0.0f, 0.0f, 1.0f,    /**/    1.0f, 1.0f, // Upper right corner
+     0.5f, -0.5f, 0.0f,    /**/    1.0f, 1.0f, 1.0f,    /**/    1.0f, 0.0f  // Lower right corner
 };
 
 GLuint GLuIndicies[]
 {
-    0, 3, 5, //Lower left triangle
-    3, 2, 4, //Lower right triangle
-    5, 4, 1  //Upper triangle
+    0, 2, 1, // Upper triangle
+    0, 3, 2  // Lower triangle
 };
 
 int main()
@@ -37,7 +37,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     //Set up Window
-    GLFWwindow* pWindow = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* pWindow = glfwCreateWindow(800, 800, "LearnOpenGL", NULL, NULL);
     if (pWindow == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -51,7 +51,7 @@ int main()
         return -1;
     }
 
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, 800, 800);
     glfwSetFramebufferSizeCallback(pWindow, FramebufferSizeCallback);
     
     //Set up Shader
@@ -63,13 +63,18 @@ int main()
     CVertexBuffer VBO1(GLfVertices, sizeof(GLfVertices));
     CElementBuffer EBO1(GLuIndicies, sizeof(GLuIndicies));
 
-    VAO1.LinkAttribute(VBO1, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);
-    VAO1.LinkAttribute(VBO1, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    VAO1.LinkAttribute(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
+    VAO1.LinkAttribute(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    VAO1.LinkAttribute(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     VAO1.Unbind();
     VBO1.Unbind();
     EBO1.Unbind();
     
-    GLuint uniID = glGetUniformLocation(ShaderProgram.m_GLuID, "scale");
+    GLuint uniScale = glGetUniformLocation(ShaderProgram.m_GLuID, "scale");
+
+    //Texture
+    CTexture Texture(std::string("TestTexture.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+    Texture.TextureUnit(ShaderProgram, "tex0", 0);
 
     //Render Loop
     while (!glfwWindowShouldClose(pWindow))
@@ -84,10 +89,11 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         ShaderProgram.Activate();
-        glUniform1f(uniID, 1.5f);
+        glUniform1f(uniScale, 1.5f);
+        Texture.Bind();
         VAO1.Bind();
         
-        glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         //Check and call events and swap the buffers
         glfwSwapBuffers(pWindow);
@@ -97,6 +103,7 @@ int main()
     VAO1.Delete();
     VBO1.Delete();
     EBO1.Delete();
+    Texture.Delete();
     ShaderProgram.Delete();
     glfwDestroyWindow(pWindow);
     glfwTerminate();

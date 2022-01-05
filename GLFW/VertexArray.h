@@ -11,7 +11,7 @@ public:
 
 	void LinkAttribute
 	(
-		CVertexBuffer VertexBuffer, 
+		CVertexBuffer& VertexBuffer, 
 		GLuint GluLayout, 
 		GLuint _GLuNumComponents, 
 		GLenum _GLeType, 
