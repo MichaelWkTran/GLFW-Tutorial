@@ -12,23 +12,31 @@
 #include "VertexBuffer.h"
 #include "ElementBuffer.h"
 #include "Texture.h"
+#include "Camera.h"
 
 void FramebufferSizeCallback(GLFWwindow* _pWindow, int _iWidth, int _iHeight);
 
 GLfloat GLfVertices[] =
 {
-    //Coordinates          /**/    //Colours            /**/    Texture Coordinate
-    -0.5f, -0.5f, 0.0f,    /**/    1.0f, 0.0f, 0.0f,    /**/    0.0f, 0.0f, // Lower left corner
-    -0.5f,  0.5f, 0.0f,    /**/    0.0f, 1.0f, 0.0f,    /**/    0.0f, 1.0f, // Upper left corner
-     0.5f,  0.5f, 0.0f,    /**/    0.0f, 0.0f, 1.0f,    /**/    1.0f, 1.0f, // Upper right corner
-     0.5f, -0.5f, 0.0f,    /**/    1.0f, 1.0f, 1.0f,    /**/    1.0f, 0.0f  // Lower right corner
+    //Coordinates          /**/    //Colours               /**/    Texture Coordinate
+    -0.5f, 0.0f,  0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    0.0f, 0.0f,
+    -0.5f, 0.0f, -0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    5.0f, 0.0f,
+     0.5f, 0.0f, -0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    0.0f, 0.0f,
+     0.5f, 0.0f,  0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    5.0f, 0.0f,
+     0.0f, 0.8f,  0.0f,    /**/    0.92f, 0.86f, 0.76f,    /**/    2.5f, 5.0f
 };
 
 GLuint GLuIndicies[]
 {
-    0, 2, 1, // Upper triangle
-    0, 3, 2  // Lower triangle
+    0, 1, 2,
+    0, 2, 3,
+    0, 1, 4,
+    1, 2, 4,
+    2, 3, 4,
+    3, 0, 4
 };
+
+const unsigned int uViewPortW = 800, uViewPortH = 800;
 
 int main()
 {
@@ -40,7 +48,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     //Set up Window
-    GLFWwindow* pWindow = glfwCreateWindow(800, 800, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* pWindow = glfwCreateWindow(uViewPortW, uViewPortH, "LearnOpenGL", NULL, NULL);
     if (pWindow == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -54,7 +62,7 @@ int main()
         return -1;
     }
 
-    glViewport(0, 0, 800, 800);
+    glViewport(0, 0, uViewPortW, uViewPortH);
     glfwSetFramebufferSizeCallback(pWindow, FramebufferSizeCallback);
     
     //Set up Shader
@@ -73,11 +81,12 @@ int main()
     VBO1.Unbind();
     EBO1.Unbind();
     
-    GLuint uniScale = glGetUniformLocation(ShaderProgram.m_GLuID, "scale");
+    glEnable(GL_DEPTH_TEST);
 
-    //Texture
-    CTexture Texture(std::string("TestTexture.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+    CTexture Texture(std::string("TestTextureTiles.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
     Texture.TextureUnit(ShaderProgram, "tex0", 0);
+
+    CCamera Camera(uViewPortW, uViewPortH, glm::vec3(0.0f, 0.0f, 2.0f));
 
     //Render Loop
     while (!glfwWindowShouldClose(pWindow))
@@ -90,13 +99,17 @@ int main()
 
         //Rendering
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         ShaderProgram.Activate();
-        glUniform1f(uniScale, 1.5f);
+
+        //Set up Camera
+        Camera.Inputs(pWindow);
+        Camera.Matrix(45.0f, 0.1f, 100.0f, ShaderProgram, "camMatrix");
+
+        //Set up model
         Texture.Bind();
         VAO1.Bind();
-        
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, sizeof(GLuIndicies)/sizeof(int), GL_UNSIGNED_INT, 0);
 
         //Check and call events and swap the buffers
         glfwSwapBuffers(pWindow);
