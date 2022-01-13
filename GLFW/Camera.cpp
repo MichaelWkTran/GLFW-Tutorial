@@ -7,14 +7,20 @@ CCamera::CCamera(int _iViewPortW, int _iViewPortH, glm::vec3 _v3Position)
 	m_v3Position = _v3Position;
 }
 
-void CCamera::Matrix(float _fFOVdeg, float _fNearPlane, float _fFarPlane, CShader& _Shader, const char* _pUniform)
+void CCamera::UpdateMatrix(float _fFOVdeg, float _fNearPlane, float _fFarPlane)
 {
-	glm::mat4 mat4View = glm::mat4(1.0f), mat4Projection = glm::mat4(1.0f);
+	glm::mat4 mat4View = glm::mat4(1.0f);
+	glm::mat4 mat4Projection = glm::mat4(1.0f);
 
 	mat4View = glm::lookAt(m_v3Position, m_v3Position + m_v3Orientation, m_v3Up);
 	mat4Projection = glm::perspective(glm::radians(_fFOVdeg), (float)m_uViewPortW / (float)m_uViewPortH, _fNearPlane, _fFarPlane);
 
-	glUniformMatrix4fv(glGetUniformLocation(_Shader.m_GLuID, _pUniform), 1, GL_FALSE, glm::value_ptr(mat4Projection * mat4View));
+	m_mat4CameraMatrix = mat4Projection * mat4View;
+}
+
+void CCamera::Matrix(CShader& _Shader, const char* _pUniform)
+{
+	glUniformMatrix4fv(glGetUniformLocation(_Shader.m_GLuID, _pUniform), 1, GL_FALSE, glm::value_ptr(m_mat4CameraMatrix));
 }
 
 void CCamera::Inputs(GLFWwindow* _Window)

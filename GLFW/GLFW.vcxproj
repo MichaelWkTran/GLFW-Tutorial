@@ -171,6 +171,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Default.frag" />
+    <None Include="Light.frag" />
+    <None Include="Light.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="TestTexture.png" />

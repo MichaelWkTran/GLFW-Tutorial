@@ -16,6 +16,7 @@ public:
 	glm::vec3 m_v3Position;
 	glm::vec3 m_v3Orientation = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 m_v3Up = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::mat4 m_mat4CameraMatrix = glm::mat4(1.0f);
 
 	bool m_bFirstClick = true;
 
@@ -26,6 +27,7 @@ public:
 
 	CCamera(int _iViewPortW, int _iViewPortH, glm::vec3 _v3Position);
 
-	void Matrix(float _fFOVdeg, float _fNearPlane, float _fFarPlane, CShader& _Shader, const char* _pUniform);
+	void UpdateMatrix(float _fFOVdeg, float _fNearPlane, float _fFarPlane);
+	void Matrix(CShader& _Shader, const char* _pUniform);
 	void Inputs(GLFWwindow* _Window);
 };
