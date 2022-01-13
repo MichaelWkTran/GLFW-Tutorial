@@ -18,37 +18,17 @@ void FramebufferSizeCallback(GLFWwindow* _pWindow, int _iWidth, int _iHeight);
 
 GLfloat GLfVertices[] =
 {
-    //Coordinates          /**/    //Colours               /**/    Texture Coordinate    /**/     Normals
-    -0.5f, 0.0f,  0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    0.0f, 0.0f,           /**/     0.0f, -1.0f, 0.0f, // Bottom side
-    -0.5f, 0.0f, -0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    0.0f, 5.0f,           /**/     0.0f, -1.0f, 0.0f, // Bottom side
-     0.5f, 0.0f, -0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    5.0f, 5.0f,           /**/     0.0f, -1.0f, 0.0f, // Bottom side
-     0.5f, 0.0f,  0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    5.0f, 0.0f,           /**/     0.0f, -1.0f, 0.0f, // Bottom side
-                           /**/                            /**/                          /**/    
-    -0.5f, 0.0f,  0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    0.0f, 0.0f,           /**/    -0.8f, 0.5f,  0.0f, // Left Side
-    -0.5f, 0.0f, -0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    5.0f, 0.0f,           /**/    -0.8f, 0.5f,  0.0f, // Left Side
-     0.0f, 0.8f,  0.0f,    /**/    0.92f, 0.86f, 0.76f,    /**/    2.5f, 5.0f,           /**/    -0.8f, 0.5f,  0.0f, // Left Side
-                           /**/                            /**/                          /**/                 
-    -0.5f, 0.0f, -0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    5.0f, 0.0f,           /**/     0.0f, 0.5f,  -0.8f, // Non-facing side
-     0.5f, 0.0f, -0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    0.0f, 0.0f,           /**/     0.0f, 0.5f,  -0.8f, // Non-facing side
-     0.0f, 0.8f,  0.0f,    /**/    0.92f, 0.86f, 0.76f,    /**/    2.5f, 5.0f,           /**/     0.0f, 0.5f,  -0.8f, // Non-facing side
-                           /**/                            /**/                          /**/                 
-     0.5f, 0.0f, -0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    0.0f, 0.0f,           /**/     0.8f, 0.5f,  0.0f, // Right side
-     0.5f, 0.0f,  0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    5.0f, 0.0f,           /**/     0.8f, 0.5f,  0.0f, // Right side
-     0.0f, 0.8f,  0.0f,    /**/    0.92f, 0.86f, 0.76f,    /**/    2.5f, 5.0f,           /**/     0.8f, 0.5f,  0.0f, // Right side
-                           /**/                            /**/                          /**/                 
-     0.5f, 0.0f,  0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    5.0f, 0.0f,           /**/     0.0f, 0.5f,  0.8f, // Facing side
-    -0.5f, 0.0f,  0.5f,    /**/    0.83f, 0.70f, 0.44f,    /**/    0.0f, 0.0f,           /**/     0.0f, 0.5f,  0.8f, // Facing side
-     0.0f, 0.8f,  0.0f,    /**/    0.92f, 0.86f, 0.76f,    /**/    2.5f, 5.0f,           /**/     0.0f, 0.5f,  0.8f  // Facing side
+    //Coordinates          /**/    //Colours            /**/    Texture Coordinate    /**/    Normals
+    -1.0f, 0.0f,  1.0f,	   /**/    0.0f, 0.0f, 0.0f,    /**/    0.0f, 0.0f,		      /**/    0.0f, 1.0f, 0.0f,
+    -1.0f, 0.0f, -1.0f,	   /**/    0.0f, 0.0f, 0.0f,    /**/    0.0f, 1.0f,		      /**/    0.0f, 1.0f, 0.0f,
+     1.0f, 0.0f, -1.0f,    /**/    0.0f, 0.0f, 0.0f,    /**/    1.0f, 1.0f,		      /**/    0.0f, 1.0f, 0.0f,
+     1.0f, 0.0f,  1.0f,	   /**/    0.0f, 0.0f, 0.0f,    /**/    1.0f, 0.0f,		      /**/    0.0f, 1.0f, 0.0f
 };
 
 GLuint GLuIndices[]
 {
-    0,  1,  2,  // Bottom side
-	0,  2,  3,  // Bottom side
-	4,  6,  5,  // Left side
-	7,  9,  8,  // Non-facing side
-	10, 12, 11, // Right side
-	13, 15, 14  // Facing side
+    0, 1, 2,
+    0, 2, 3
 };
 
 GLfloat GLfLightVertices[] =
@@ -144,8 +124,10 @@ int main()
     glUniform4f(glGetUniformLocation(ShaderPyramid.m_GLuID, "lightColor"), v4LightColour.x, v4LightColour.y, v4LightColour.z, v4LightColour.w);
     glUniform3f(glGetUniformLocation(ShaderPyramid.m_GLuID, "lightPos"), v3LightPos.x, v3LightPos.y, v3LightPos.z);
 
-    CTexture Texture(std::string("TestTextureTiles.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+    CTexture Texture(std::string("Planks.png").c_str(), GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
     Texture.TextureUnit(ShaderPyramid, "tex0", 0);
+    CTexture TextureSpecular(std::string("PlanksSpecular.png").c_str(), GL_TEXTURE_2D, 1, GL_RED, GL_UNSIGNED_BYTE);
+    Texture.TextureUnit(ShaderPyramid, "tex1", 1);
 
     //Set up Textures
     glEnable(GL_DEPTH_TEST);
@@ -175,7 +157,7 @@ int main()
         ShaderPyramid.Activate();
         glUniform3f(glGetUniformLocation(ShaderPyramid.m_GLuID, "camPos"), Camera.m_v3Position.x, Camera.m_v3Position.y, Camera.m_v3Position.z);
         Camera.Matrix(ShaderPyramid, "camMatrix");
-        Texture.Bind(); VAOPyramid.Bind();
+        Texture.Bind(); TextureSpecular.Bind(); VAOPyramid.Bind();
         glDrawElements(GL_TRIANGLES, sizeof(GLuIndices)/sizeof(int), GL_UNSIGNED_INT, 0);
         
         //Set up Light

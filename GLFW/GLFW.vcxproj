@@ -175,6 +175,8 @@
     <None Include="Light.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Planks.png" />
+    <Image Include="PlanksSpecular.png" />
     <Image Include="TestTexture.png" />
     <Image Include="TestTextureTiles.png" />
   </ItemGroup>
