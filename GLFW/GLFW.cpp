@@ -102,8 +102,8 @@ int main()
     glm::mat4 mat4LightModel = glm::mat4(1.0f);
     mat4LightModel = glm::translate(mat4LightModel, v3LightPos);
     ShaderLight.Activate();
-    glUniformMatrix4fv(glGetUniformLocation(ShaderLight.m_GLuID, "model"), 1, GL_FALSE, glm::value_ptr(mat4LightModel));
-    glUniform4f(glGetUniformLocation(ShaderLight.m_GLuID, "lightColor"), v4LightColour.x, v4LightColour.y, v4LightColour.z, v4LightColour.w);
+    glUniformMatrix4fv(glGetUniformLocation(ShaderLight.m_GLuID, "uni_mat4Model"), 1, GL_FALSE, glm::value_ptr(mat4LightModel));
+    glUniform4f(glGetUniformLocation(ShaderLight.m_GLuID, "uni_v4LightColor"), v4LightColour.x, v4LightColour.y, v4LightColour.z, v4LightColour.w);
     
     //Set up Pyramid Shader
     CShader ShaderPyramid("Default.vert", "Default.frag");
@@ -120,14 +120,14 @@ int main()
     glm::mat4 mat4PyramidModel = glm::mat4(1.0f);
     mat4PyramidModel = glm::translate(mat4PyramidModel, v3PyramidPos);
     ShaderPyramid.Activate();
-    glUniformMatrix4fv(glGetUniformLocation(ShaderPyramid.m_GLuID, "model"), 1, GL_FALSE, glm::value_ptr(mat4PyramidModel));
-    glUniform4f(glGetUniformLocation(ShaderPyramid.m_GLuID, "lightColor"), v4LightColour.x, v4LightColour.y, v4LightColour.z, v4LightColour.w);
-    glUniform3f(glGetUniformLocation(ShaderPyramid.m_GLuID, "lightPos"), v3LightPos.x, v3LightPos.y, v3LightPos.z);
+    glUniformMatrix4fv(glGetUniformLocation(ShaderPyramid.m_GLuID, "uni_mat4Model"), 1, GL_FALSE, glm::value_ptr(mat4PyramidModel));
+    glUniform4f(glGetUniformLocation(ShaderPyramid.m_GLuID, "uni_v4LightColor"), v4LightColour.x, v4LightColour.y, v4LightColour.z, v4LightColour.w);
+    glUniform3f(glGetUniformLocation(ShaderPyramid.m_GLuID, "uni_v3LightPosition"), v3LightPos.x, v3LightPos.y, v3LightPos.z);
 
     CTexture Texture("Planks.png", GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
-    Texture.TextureUnit(ShaderPyramid, "tex0", 0);
+    Texture.TextureUnit(ShaderPyramid, "uni_samp2DTexture", 0);
     CTexture TextureSpecular("PlanksSpecular.png", GL_TEXTURE_2D, 1, GL_RED, GL_UNSIGNED_BYTE);
-    Texture.TextureUnit(ShaderPyramid, "tex1", 1);
+    Texture.TextureUnit(ShaderPyramid, "uni_samp2DSpecularTexture", 1);
 
     //Set up Textures
     glEnable(GL_DEPTH_TEST);
@@ -155,14 +155,14 @@ int main()
         //What shaders the program is going to use
         //Set up Pyramid
         ShaderPyramid.Activate();
-        glUniform3f(glGetUniformLocation(ShaderPyramid.m_GLuID, "camPos"), Camera.m_v3Position.x, Camera.m_v3Position.y, Camera.m_v3Position.z);
-        Camera.Matrix(ShaderPyramid, "camMatrix");
+        glUniform3f(glGetUniformLocation(ShaderPyramid.m_GLuID, "uni_v3CameraPosition"), Camera.m_v3Position.x, Camera.m_v3Position.y, Camera.m_v3Position.z);
+        Camera.Matrix(ShaderPyramid, "uni_mat4CameraMatrix");
         Texture.Bind(); TextureSpecular.Bind(); VAOPyramid.Bind();
         glDrawElements(GL_TRIANGLES, sizeof(GLuIndices)/sizeof(int), GL_UNSIGNED_INT, 0);
         
         //Set up Light
         ShaderLight.Activate();
-        Camera.Matrix(ShaderLight, "camMatrix");
+        Camera.Matrix(ShaderLight, "uni_mat4CameraMatrix");
         VAOLight.Bind();
         glDrawElements(GL_TRIANGLES, sizeof(GLuLightIndices) / sizeof(int), GL_UNSIGNED_INT, 0);
 

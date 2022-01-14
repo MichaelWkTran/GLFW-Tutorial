@@ -1,11 +1,11 @@
 #version 330 core
 
-layout (location = 0) in vec3 aPos;
+layout (location = 0) in vec3 in_v3Position;
 
-uniform mat4 camMatrix;
-uniform mat4 model;
+uniform mat4 uni_mat4CameraMatrix;
+uniform mat4 uni_mat4Model;
 
 void main()
 {
-	gl_Position = camMatrix * model * vec4(aPos, 1.0f);
+	gl_Position = uni_mat4CameraMatrix * uni_mat4Model * vec4(in_v3Position, 1.0f);
 }
