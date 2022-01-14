@@ -19,10 +19,10 @@ void FramebufferSizeCallback(GLFWwindow* _pWindow, int _iWidth, int _iHeight);
 GLfloat GLfVertices[] =
 {
     //Coordinates          /**/    //Colours            /**/    Texture Coordinate    /**/    Normals
-    -1.0f, 0.0f,  1.0f,	   /**/    0.0f, 0.0f, 0.0f,    /**/    0.0f, 0.0f,		      /**/    0.0f, 1.0f, 0.0f,
-    -1.0f, 0.0f, -1.0f,	   /**/    0.0f, 0.0f, 0.0f,    /**/    0.0f, 1.0f,		      /**/    0.0f, 1.0f, 0.0f,
-     1.0f, 0.0f, -1.0f,    /**/    0.0f, 0.0f, 0.0f,    /**/    1.0f, 1.0f,		      /**/    0.0f, 1.0f, 0.0f,
-     1.0f, 0.0f,  1.0f,	   /**/    0.0f, 0.0f, 0.0f,    /**/    1.0f, 0.0f,		      /**/    0.0f, 1.0f, 0.0f
+    -1.0f, 0.0f,  1.0f,	   /**/    1.0f, 1.0f, 1.0f,    /**/    0.0f, 0.0f,		      /**/    0.0f, 1.0f, 0.0f,
+    -1.0f, 0.0f, -1.0f,	   /**/    1.0f, 1.0f, 1.0f,    /**/    0.0f, 1.0f,		      /**/    0.0f, 1.0f, 0.0f,
+     1.0f, 0.0f, -1.0f,    /**/    1.0f, 1.0f, 1.0f,    /**/    1.0f, 1.0f,		      /**/    0.0f, 1.0f, 0.0f,
+     1.0f, 0.0f,  1.0f,	   /**/    1.0f, 1.0f, 1.0f,    /**/    1.0f, 0.0f,		      /**/    0.0f, 1.0f, 0.0f
 };
 
 GLuint GLuIndices[]
@@ -124,9 +124,9 @@ int main()
     glUniform4f(glGetUniformLocation(ShaderPyramid.m_GLuID, "lightColor"), v4LightColour.x, v4LightColour.y, v4LightColour.z, v4LightColour.w);
     glUniform3f(glGetUniformLocation(ShaderPyramid.m_GLuID, "lightPos"), v3LightPos.x, v3LightPos.y, v3LightPos.z);
 
-    CTexture Texture(std::string("Planks.png").c_str(), GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
+    CTexture Texture("Planks.png", GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
     Texture.TextureUnit(ShaderPyramid, "tex0", 0);
-    CTexture TextureSpecular(std::string("PlanksSpecular.png").c_str(), GL_TEXTURE_2D, 1, GL_RED, GL_UNSIGNED_BYTE);
+    CTexture TextureSpecular("PlanksSpecular.png", GL_TEXTURE_2D, 1, GL_RED, GL_UNSIGNED_BYTE);
     Texture.TextureUnit(ShaderPyramid, "tex1", 1);
 
     //Set up Textures

@@ -59,13 +59,13 @@ void CShader::Delete()
 
 void CShader::CompileErrors(unsigned int _uShader, const char* _pType)
 {
-	GLint hasCompiled;
+	GLint GLiHasCompiled;
 	char cInfoLog[1024];
 
 	if (_pType != "PROGRAM")
 	{
-		glGetShaderiv(_uShader, GL_COMPILE_STATUS, &hasCompiled);
-		if (hasCompiled == GL_FALSE)
+		glGetShaderiv(_uShader, GL_COMPILE_STATUS, &GLiHasCompiled);
+		if (GLiHasCompiled == GL_FALSE)
 		{
 			glGetShaderInfoLog(_uShader, 1024, NULL, cInfoLog);
 			std::cout << "SHADER_COMPILATION_ERROR for:" << _pType << "\n" << cInfoLog << std::endl;
@@ -73,8 +73,8 @@ void CShader::CompileErrors(unsigned int _uShader, const char* _pType)
 	}
 	else
 	{
-		glGetProgramiv(_uShader, GL_LINK_STATUS, &hasCompiled);
-		if (hasCompiled == GL_FALSE)
+		glGetProgramiv(_uShader, GL_LINK_STATUS, &GLiHasCompiled);
+		if (GLiHasCompiled == GL_FALSE)
 		{
 			glGetProgramInfoLog(_uShader, 1024, NULL, cInfoLog);
 			std::cout << "SHADER_LINKING_ERROR for:" << _pType << "\n" << cInfoLog << std::endl;
