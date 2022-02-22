@@ -1,12 +1,14 @@
 #pragma once
 
+#include <glm/glm.hpp>
 #include <glad/glad.h>
+#include <vector>
 
 class CElementBuffer
 {
 public:
 	GLuint m_GLuID;
-	CElementBuffer(GLuint* _pIndicies, GLsizeiptr _Size);
+	CElementBuffer(std::vector<GLuint>& _GLuIndicies);
 
 	void Bind();
 	void Unbind();

@@ -2,13 +2,13 @@
 
 out vec4 FragColor;
 
+in vec3 m_v3CurrentPosition;
+in vec3 m_v3Normal;
 in vec3 m_v3Color;
 in vec2 m_v2TextureCoord;
-in vec3 m_v3Normal;
-in vec3 m_v3CurrentPosition;
 
-uniform sampler2D uni_samp2DTexture;
-uniform sampler2D uni_samp2DSpecularTexture;
+uniform sampler2D uni_samp2DDiffuse0;
+uniform sampler2D uni_samp2DSpecular0;
 uniform vec4 uni_v4LightColor;
 uniform vec3 uni_v3LightPosition;
 uniform vec3 uni_v3CameraPosition;
@@ -31,8 +31,8 @@ vec4 PointLight(float _fAmbient)
 	float fSpecAmount = pow(max(dot(v3ViewDirection, v3ReflectionDirection), 0.0f), 16);
 	float fSpecular = fSpecAmount * fSpecularLight;
 
-	return (texture(uni_samp2DTexture, m_v2TextureCoord) * m_v3Color * uni_v4LightColor * ((fDiffuse  * fIntensity) + _fAmbient)) + 
-	       (texture(uni_samp2DSpecularTexture, m_v2TextureCoord).r * fSpecular * fIntensity);
+	return (texture(uni_samp2DDiffuse0, m_v2TextureCoord) * m_v3Color * uni_v4LightColor * ((fDiffuse  * fIntensity) + _fAmbient)) + 
+	       (texture(uni_samp2DSpecular0, m_v2TextureCoord).r * fSpecular * fIntensity);
 }
 
 vec4 DirectionalLight(float _fAmbient)
@@ -47,8 +47,8 @@ vec4 DirectionalLight(float _fAmbient)
 	float fSpecAmount = pow(max(dot(v3ViewDirection, v3ReflectionDirection), 0.0f), 16);
 	float fSpecular = fSpecAmount * fSpecularLight;
 
-	return (texture(uni_samp2DTexture, m_v2TextureCoord) * m_v3Color * uni_v4LightColor * (fDiffuse + _fAmbient)) + 
-	       (texture(uni_samp2DSpecularTexture, m_v2TextureCoord).r * fSpecular);
+	return (texture(uni_samp2DDiffuse0, m_v2TextureCoord) * m_v3Color * uni_v4LightColor * (fDiffuse + _fAmbient)) + 
+	       (texture(uni_samp2DSpecular0, m_v2TextureCoord).r * fSpecular);
 }
 
 vec4 SpotLight(float _fAmbient)
@@ -69,8 +69,8 @@ vec4 SpotLight(float _fAmbient)
 	float fAngle = dot(vec3(0.0f, -1.0f, 0.0f), -v3lightDirection);
 	float fIntensity = clamp((fAngle - fOuterCone) / (fInnerCone - fOuterCone), 0.0f, 1.0f);
 
-	return (texture(uni_samp2DTexture, m_v2TextureCoord) * m_v3Color * uni_v4LightColor * ((fDiffuse  * fIntensity) + _fAmbient)) + 
-	       (texture(uni_samp2DSpecularTexture, m_v2TextureCoord).r * fSpecular * fIntensity);
+	return (texture(uni_samp2DDiffuse0, m_v2TextureCoord) * m_v3Color * uni_v4LightColor * ((fDiffuse  * fIntensity) + _fAmbient)) + 
+	       (texture(uni_samp2DSpecular0, m_v2TextureCoord).r * fSpecular * fIntensity);
 }
 
 void main()

@@ -1,10 +1,10 @@
 #include "VertexBuffer.h"
 
-CVertexBuffer::CVertexBuffer(GLfloat* _pVerticies, GLsizeiptr _Size)
+CVertexBuffer::CVertexBuffer(std::vector<stVertex>& _stVerticies)
 {
 	glGenBuffers(1, &m_GLuID);
     glBindBuffer(GL_ARRAY_BUFFER, m_GLuID);
-    glBufferData(GL_ARRAY_BUFFER, _Size, _pVerticies, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, _stVerticies.size() * sizeof(stVertex), _stVerticies.data(), GL_STATIC_DRAW);
 }
 
 void CVertexBuffer::Bind()

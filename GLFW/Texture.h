@@ -8,10 +8,10 @@ class CTexture
 {
 public:
 	GLuint m_GLuID;
-	GLenum m_GLeType;
+	const char* m_pType;
 	GLuint m_GLuUnit;
 
-	CTexture(const char* _pImage, GLenum _GLeType, GLuint _GLuSlot, GLenum _GLeFormat, GLenum _GLePixelType);
+	CTexture(const char* _pImage, const char* _pType, GLuint _GLuSlot, GLenum _GLeFormat, GLenum _GLePixelType);
 
 	void TextureUnit(CShader& _Shader, const char* _pUniform, GLuint _GLuUnit);
 	void Bind();
