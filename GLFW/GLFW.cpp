@@ -66,12 +66,16 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(pWindow);
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) //???
+
+    //Initialize GLAD
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
+        glfwTerminate();
         return -1;
     }
 
+    //Setup Window Viewport
     glViewport(0, 0, uViewPortW, uViewPortH);
     glfwSetFramebufferSizeCallback(pWindow, FramebufferSizeCallback);
     
@@ -144,9 +148,7 @@ int main()
         glfwPollEvents();
     }
 
-    //VAOPyramid.Delete(); VBOPyramid.Delete(); EBOPyramid.Delete(); Texture.Delete(); 
     ShaderPyramid.Delete();
-    //VAOLight.Delete(); VBOLight.Delete(); EBOPyramid.Delete(); 
     ShaderLight.Delete();
     glfwDestroyWindow(pWindow);
     glfwTerminate();

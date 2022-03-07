@@ -19,6 +19,33 @@
     <Filter Include="Resource Files\Textures">
       <UniqueIdentifier>{361ce30e-d68e-4373-a232-b0637eb874e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{bd2db6dd-c394-4111-953d-519b58bf8b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Camera">
+      <UniqueIdentifier>{e2dc544c-d951-4768-b238-1906718bf440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ElementBuffer">
+      <UniqueIdentifier>{2e5a7698-b46c-4126-9c4d-6841e0a59979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Mesh">
+      <UniqueIdentifier>{33534270-a273-4f47-bb71-4186c6237cb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Model">
+      <UniqueIdentifier>{edbb0384-5be1-4360-a9c2-0de3a54884a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Shader">
+      <UniqueIdentifier>{c1331875-2b8a-4efa-afb2-34a97c0827c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Texture">
+      <UniqueIdentifier>{dd265142-916c-417d-ac5c-fa2ecc1f34ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\VertexArray">
+      <UniqueIdentifier>{dd5e9189-fc0d-4ec1-8156-bc8e224a52e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\VertexBuffer">
+      <UniqueIdentifier>{a8b4b203-7195-4cae-8a28-72b86ce7d05f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GLFW.cpp">
@@ -27,32 +54,32 @@
     <ClCompile Include="glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VertexBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ElementBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VertexArray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="stb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Classes\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="ElementBuffer.cpp">
+      <Filter>Classes\ElementBuffer</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Classes\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Classes\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Classes\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Classes\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexArray.cpp">
+      <Filter>Classes\VertexArray</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>Classes\VertexBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -61,29 +88,29 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexBuffer.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Camera.h">
+      <Filter>Classes\Camera</Filter>
     </ClInclude>
     <ClInclude Include="ElementBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VertexArray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
+      <Filter>Classes\ElementBuffer</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
-      <Filter>Header Files</Filter>
+      <Filter>Classes\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
-      <Filter>Header Files</Filter>
+      <Filter>Classes\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Classes\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Classes\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexArray.h">
+      <Filter>Classes\VertexArray</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Classes\VertexBuffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

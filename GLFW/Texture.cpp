@@ -24,11 +24,11 @@ CTexture::CTexture(const char* _pImage, const char* _pType, GLuint _GLuSlot, GLe
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void CTexture::TextureUnit(CShader& _Shader, const char* _pUniform, GLuint _GLuUnit)
+void CTexture::TextureUniform(CShader& _Shader, const char* _pUniform, GLuint _GLuUnit)
 {
-	GLuint texUni = glGetUniformLocation(_Shader.m_GLuID, _pUniform);
+	GLuint texUniform = glGetUniformLocation(_Shader.m_GLuID, _pUniform);
 	_Shader.Activate();
-	glUniform1i(texUni, _GLuUnit);
+	glUniform1i(texUniform, _GLuUnit);
 }
 
 void CTexture::Bind()

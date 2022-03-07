@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\GLFW"
   ],
-  "SelectedNode": "\\GLFW.sln",
+  "SelectedNode": "\\GLFW\\Camera.cpp",
   "PreviewInSolutionExplorer": false
 }

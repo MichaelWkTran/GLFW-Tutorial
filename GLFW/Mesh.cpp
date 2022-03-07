@@ -20,10 +20,11 @@ CMesh::CMesh(std::vector<stVertex>& _vVerticies, std::vector<GLuint>& _vIndicies
 
 void CMesh::Draw(CShader& _Shader, CCamera& _Camera)
 {
-    _Shader.Activate();
+	_Shader.Activate();
     m_VertexArray.Bind();
 
-    unsigned int uNumDiffuse = 0;
+
+	unsigned int uNumDiffuse = 0;
     unsigned int uNumSpecular = 0;
 	for (unsigned int i = 0; i < m_vTextures.size(); i++)
 	{
@@ -33,7 +34,7 @@ void CMesh::Draw(CShader& _Shader, CCamera& _Camera)
 		if (strType == "Diffuse") { strNum = std::to_string(uNumDiffuse++); }
 		else if (strType == "Specular") { strNum = std::to_string(uNumSpecular++); }
 
-		m_vTextures[i].TextureUnit(_Shader, ("uni_samp2D" + strType + strNum).c_str(), i);
+		m_vTextures[i].TextureUniform(_Shader, ("uni_samp2D" + strType + strNum).c_str(), i);
 		m_vTextures[i].Bind();
 	}
 	
@@ -41,4 +42,8 @@ void CMesh::Draw(CShader& _Shader, CCamera& _Camera)
 	_Camera.Matrix(_Shader, "uni_mat4CameraMatrix");
 
 	glDrawElements(GL_TRIANGLES, m_vIndicies.size(), GL_UNSIGNED_INT, 0);
+
+
+	m_VertexArray.Unbind();
+	for (CTexture& Texture : m_vTextures) Texture.Unbind();
 }

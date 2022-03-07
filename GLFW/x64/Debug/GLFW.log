@@ -1,15 +1,7 @@
 ﻿  Camera.cpp
-  ElementBuffer.cpp
-  Mesh.cpp
-D:\Michael\Other Stuff\C++\TestOpenGL\GLFW\Mesh.cpp(43,69): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  Model.cpp
-  Shader.cpp
   GLFW.cpp
-  stb.cpp
-  Texture.cpp
-  VertexArray.cpp
-D:\Michael\Other Stuff\C++\TestOpenGL\GLFW\VertexArray.cpp(20,77): warning C4244: 'argument': conversion from 'GLsizeiptr' to 'GLsizei', possible loss of data
-  VertexBuffer.cpp
+  Mesh.cpp
+D:\Michael\Other Stuff\C++\TestOpenGL\GLFW\Mesh.cpp(44,69): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Model.cpp
   Generating Code...
-  glad.c
   GLFW.vcxproj -> D:\Michael\Other Stuff\C++\TestOpenGL\x64\Debug\GLFW.exe

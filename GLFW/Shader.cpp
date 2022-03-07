@@ -35,6 +35,7 @@ CShader::CShader(const char* _pVertexFile, const char* _pFragmentFile)
 	glCompileShader(GLuFragmentShader);
 	CompileErrors(GLuFragmentShader, "FRAGMENT");
 
+	//Set up program
 	m_GLuID = glCreateProgram();
 
 	glAttachShader(m_GLuID, GLuVertexShader);
