@@ -1,5 +1,21 @@
-﻿  GLFW.cpp
-GLFW.obj : error LNK2019: unresolved external symbol _glfwInit referenced in function _main
-GLFW.obj : error LNK2019: unresolved external symbol _glfwWindowHint referenced in function _main
-D:\Michael\Other stuff\C++\TestOpenGL1\GLFW\lib\glfw3.lib : warning LNK4272: library machine type 'x64' conflicts with target machine type 'x86'
-D:\Michael\Other stuff\C++\TestOpenGL1\Debug\GLFW.exe : fatal error LNK1120: 2 unresolved externals
+﻿  Camera.cpp
+C:\Users\User\Documents\GitHub\GLFW-Tutorial\GLFW\Camera.h(3,10): fatal error C1083: Cannot open include file: 'glad/glad.h': No such file or directory
+  ElementBuffer.cpp
+C:\Users\User\Documents\GitHub\GLFW-Tutorial\GLFW\ElementBuffer.h(3,10): fatal error C1083: Cannot open include file: 'glm/glm.hpp': No such file or directory
+  Mesh.cpp
+C:\Users\User\Documents\GitHub\GLFW-Tutorial\GLFW\VertexArray.h(3,10): fatal error C1083: Cannot open include file: 'glad/glad.h': No such file or directory
+  Model.cpp
+C:\Users\User\Documents\GitHub\GLFW-Tutorial\GLFW\Model.h(3,10): fatal error C1083: Cannot open include file: 'json/json.h': No such file or directory
+  Shader.cpp
+C:\Users\User\Documents\GitHub\GLFW-Tutorial\GLFW\Shader.h(3,10): fatal error C1083: Cannot open include file: 'glad/glad.h': No such file or directory
+  GLFW.cpp
+C:\Users\User\Documents\GitHub\GLFW-Tutorial\GLFW\VertexArray.h(3,10): fatal error C1083: Cannot open include file: 'glad/glad.h': No such file or directory
+  stb.cpp
+C:\Users\User\Documents\GitHub\GLFW-Tutorial\GLFW\stb.cpp(2,10): fatal error C1083: Cannot open include file: 'stb/stb_image.h': No such file or directory
+  Texture.cpp
+C:\Users\User\Documents\GitHub\GLFW-Tutorial\GLFW\Texture.h(3,10): fatal error C1083: Cannot open include file: 'glad/glad.h': No such file or directory
+  VertexArray.cpp
+C:\Users\User\Documents\GitHub\GLFW-Tutorial\GLFW\VertexArray.h(3,10): fatal error C1083: Cannot open include file: 'glad/glad.h': No such file or directory
+  VertexBuffer.cpp
+C:\Users\User\Documents\GitHub\GLFW-Tutorial\GLFW\VertexBuffer.h(3,10): fatal error C1083: Cannot open include file: 'glm/glm.hpp': No such file or directory
+  Generating Code...
